@@ -1,0 +1,25 @@
+# fly.toml — konfigurasi deploy untuk Fly.io
+# Ganti "app" di bawah dengan nama unik aplikasi kamu (harus unik secara global di Fly.io)
+app = "rental-mobil-genz"
+primary_region = "sin" # Singapore, region terdekat dari Indonesia
+
+[build]
+
+[env]
+  PORT = "3000"
+  DB_PATH = "/data/rental.db"
+
+[[mounts]]
+  source = "rental_data"
+  destination = "/data"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"
